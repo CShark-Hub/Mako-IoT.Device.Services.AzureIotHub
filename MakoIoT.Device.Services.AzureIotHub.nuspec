@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dependency xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>MakoIoT.Device.Services.AzureIotHub/id>
+    <id>MakoIoT.Device.Services.AzureIotHub</id>
     <version>$version$</version>
     <title>MakoIoT.Device.Services.AzureIotHub</title>
     <authors>CSHARK</authors>
