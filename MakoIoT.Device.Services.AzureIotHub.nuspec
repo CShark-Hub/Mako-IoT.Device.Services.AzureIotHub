@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dependency xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>MakoIoT.Device.Services.AzureIotHub/id>
+    <version>$version$</version>
+    <title>MakoIoT.Device.Services.AzureIotHub</title>
+    <authors>CSHARK</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="file">LICENSE.md</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/CShark-Hub/Mako-IoT.Device.Services.ConfigurationManager</projectUrl>
+    <repository type="git" url="https://github.com/CShark-Hub/Mako-IoT.Device.Services.ConfigurationManager" />
+    <copyright>Copyright (c) CSHARK Sp. z o. o.</copyright>
+    <description>AzureIoTHub bus provider for MAKO-IoT</description>
+    <tags>nanoFramework C# csharp netmf netnf mako-iot configuration wifimanager</tags>
+    <dependencies>
+      <dependency id="MakoIoT.Device.Services.Interface" version="1.0.34.44535" />
+      <dependency id="nanoFramework.Azure.Devices.Client" version="1.2.3" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
+      <dependency id="nanoFramework.DependencyInjection" version="1.0.22" />
+      <dependency id="nanoFramework.Json" version="2.2.99" />
+      <dependency id="nanoFramework.Logging" version="1.1.63" />
+      <dependency id="nanoFramework.M2Mqtt" version="5.1.94" />
+      <dependency id="nanoFramework.Runtime.Events" version="1.11.6" />
+      <dependency id="nanoFramework.Runtime.Native" version="1.6.6" />
+      <dependency id="nanoFramework.System.Collections" version="1.5.18" />
+      <dependency id="nanoFramework.System.IO.Streams" version="1.1.38" />
+      <dependency id="nanoFramework.System.Net" version="1.10.52" />
+      <dependency id="nanoFramework.System.Net.Http" version="1.5.99" />
+      <dependency id="nanoFramework.System.Text" version="1.2.37" />
+      <dependency id="nanoFramework.System.Threading" version="1.1.19" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="src\MakoIoT.Device.Services.AzureIotHub\bin\Release\MakoIoT.Device.Services.AzureIotHub.dll" target="lib\MakoIoT.Device.Services.AzureIotHub.dll" />
+    <file src="src\MakoIoT.Device.Services.AzureIotHub\bin\Release\MakoIoT.Device.Services.AzureIotHub.pdb" target="lib\MakoIoT.Device.Services.AzureIotHub.pdb" />
+    <file src="src\MakoIoT.Device.Services.AzureIotHub\bin\Release\MakoIoT.Device.Services.AzureIotHub.pdbx" target="lib\MakoIoT.Device.Services.AzureIotHub.pdbx" />
+    <file src="src\MakoIoT.Device.Services.AzureIotHub\bin\Release\MakoIoT.Device.Services.AzureIotHub.pe" target="lib\MakoIoT.Device.Services.AzureIotHub.pe" />
+    <file src="README.md" target="docs\" />
+    <file src="LICENSE.md" target="" />
+  </files>
+</dependency>
