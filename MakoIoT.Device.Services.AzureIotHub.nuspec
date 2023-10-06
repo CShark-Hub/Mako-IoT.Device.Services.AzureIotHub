@@ -17,7 +17,7 @@
     <description>AzureIoTHub bus provider for MAKO-IoT</description>
     <tags>nanoFramework C# csharp netmf netnf mako-iot azure iot azureiothub</tags>
     <dependencies>
-      <dependency id="MakoIoT.Device.Services.Interface" version="1.0.34.44535" />
+      <dependency id="MakoIoT.Device.Services.Interface" version="1.0.36.21434" />
       <dependency id="nanoFramework.Azure.Devices.Client" version="1.2.3" />
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
       <dependency id="nanoFramework.DependencyInjection" version="1.0.35" />
