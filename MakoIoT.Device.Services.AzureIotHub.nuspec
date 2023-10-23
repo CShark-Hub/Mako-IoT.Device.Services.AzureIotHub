@@ -18,7 +18,7 @@
     <tags>nanoFramework C# csharp netmf netnf mako-iot azure iot azureiothub</tags>
     <dependencies>
       <dependency id="MakoIoT.Device.Services.Interface" version="1.0.36.21434" />
-      <dependency id="nanoFramework.Azure.Devices.Client" version="1.2.7" />
+      <dependency id="nanoFramework.Azure.Devices.Client" version="1.2.10" />
       <dependency id="nanoFramework.CoreLibrary" version="1.14.2" />
       <dependency id="nanoFramework.DependencyInjection" version="1.0.35" />
       <dependency id="nanoFramework.Json" version="2.2.101" />
