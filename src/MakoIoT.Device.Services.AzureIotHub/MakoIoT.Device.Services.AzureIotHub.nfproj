@@ -30,8 +30,8 @@
     <Reference Include="mscorlib">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.14.2\lib\mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.Azure.Devices.Client, Version=1.2.10.2173, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.Azure.Devices.Client.1.2.10\lib\nanoFramework.Azure.Devices.Client.dll</HintPath>
+    <Reference Include="nanoFramework.Azure.Devices.Client, Version=1.2.12.6072, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\..\packages\nanoFramework.Azure.Devices.Client.1.2.12\lib\nanoFramework.Azure.Devices.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.DependencyInjection">
@@ -48,12 +48,12 @@
     <Reference Include="nanoFramework.Logging">
       <HintPath>..\..\packages\nanoFramework.Logging.1.1.63\lib\nanoFramework.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.M2Mqtt, Version=5.1.96.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.M2Mqtt.5.1.96\lib\nanoFramework.M2Mqtt.dll</HintPath>
+    <Reference Include="nanoFramework.M2Mqtt, Version=5.1.101.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\..\packages\nanoFramework.M2Mqtt.5.1.101\lib\nanoFramework.M2Mqtt.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.M2Mqtt.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\..\packages\nanoFramework.M2Mqtt.5.1.96\lib\nanoFramework.M2Mqtt.Core.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.M2Mqtt.5.1.101\lib\nanoFramework.M2Mqtt.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
