@@ -1,6 +1,5 @@
 ﻿using MakoIoT.Device.Services.AzureIotHub.Configuration;
 using MakoIoT.Device.Services.Interface;
-using Microsoft.Extensions.Logging;
 using nanoFramework.Azure.Devices.Client;
 using nanoFramework.M2Mqtt.Messages;
 using System;
@@ -12,7 +11,7 @@ namespace MakoIoT.Device.Services.AzureIotHub
     internal sealed class AzureIotHubCommunicationService : ICommunicationService
     {
         private readonly INetworkProvider _networkProvider;
-        private readonly ILogger _logger;
+        private readonly ILog _logger;
         private readonly AzureIotHubConfig _config;
         private readonly X509Certificate _certificate;
 
@@ -25,7 +24,7 @@ namespace MakoIoT.Device.Services.AzureIotHub
 
         public event EventHandler MessageReceived;
 
-        public AzureIotHubCommunicationService(INetworkProvider networkProvider, IConfigurationService configService, ILogger logger)
+        public AzureIotHubCommunicationService(INetworkProvider networkProvider, IConfigurationService configService, ILog logger)
         {
             _networkProvider = networkProvider;
             _logger = logger;
@@ -40,7 +39,7 @@ namespace MakoIoT.Device.Services.AzureIotHub
                 _networkProvider.Connect();
                 if (!_networkProvider.IsConnected)
                 {
-                    _logger.LogError("Could not connect to network.");
+                    _logger.Error("Could not connect to network.");
                     return;
                 }
             }
@@ -58,7 +57,7 @@ namespace MakoIoT.Device.Services.AzureIotHub
         {
             if (_client.IsConnected)
             {
-                _logger.LogInformation($"AzureIoT client connected");
+                _logger.Information($"AzureIoT client connected");
                 return;
             }
 
@@ -67,7 +66,7 @@ namespace MakoIoT.Device.Services.AzureIotHub
                 var mqttConnectResult = _client.Open();
                 if (!_client.IsConnected)
                 {
-                    _logger.LogError($"Could not connect to AzureIoT. Broker returned {mqttConnectResult}");
+                    _logger.Error($"Could not connect to AzureIoT. Broker returned {mqttConnectResult}");
                     return;
                 }
             }
@@ -75,7 +74,7 @@ namespace MakoIoT.Device.Services.AzureIotHub
             {
                 if (attempt <= 3)
                 {
-                    _logger.LogWarning($"Unable to open AzureIoT connection. Rety: {++attempt}");
+                    _logger.Warning($"Unable to open AzureIoT connection. Rety: {++attempt}");
                     Thread.Sleep(attempt * 1000);
                     OpenMqttClient(attempt);
                 }
@@ -86,8 +85,8 @@ namespace MakoIoT.Device.Services.AzureIotHub
 
         private void _client_CloudToDeviceMessage(object sender, CloudToDeviceMessageEventArgs e)
         {
-            _logger.LogDebug($"Received message from topic AzureIoT hub");
-            _logger.LogTrace(e.Message);
+            _logger.Trace($"Received message from topic AzureIoT hub");
+            _logger.Trace(e.Message);
             MessageReceived?.Invoke(this, new ObjectEventArgs(e.Message));
         }
 
@@ -101,7 +100,7 @@ namespace MakoIoT.Device.Services.AzureIotHub
             var isReceived = _client.SendMessage(messageString, "application/json", new System.Collections.ArrayList() { new UserProperty("messageType", messageType) }, new CancellationTokenSource(TimeSpan.FromSeconds(60)).Token);
             if (!isReceived)
             {
-                _logger.LogError($"Unable to send message. {messageString}");
+                _logger.Error($"Unable to send message. {messageString}");
             }
         }
 
