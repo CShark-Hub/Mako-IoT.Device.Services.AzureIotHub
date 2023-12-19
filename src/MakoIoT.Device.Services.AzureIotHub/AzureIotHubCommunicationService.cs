@@ -20,7 +20,7 @@ namespace MakoIoT.Device.Services.AzureIotHub
 
         public string ClientAddress => _networkProvider.ClientAddress;
 
-        public string ClientName => _config.DeviceId;
+        public string ClientName => _config.DeviceFriendlyName ?? _config.DeviceId;
 
         public event EventHandler MessageReceived;
 
