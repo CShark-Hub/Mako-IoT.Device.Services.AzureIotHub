@@ -29,7 +29,8 @@ namespace MakoIoT.Device.Services.AzureIotHub
             _networkProvider = networkProvider;
             _logger = logger;
             _config = (AzureIotHubConfig)configService.GetConfigSection(AzureIotHubConfig.SectionName, typeof(AzureIotHubConfig));
-            _certificate = new X509Certificate(_config.AzureRootCa);
+            var cert = (AzureIotHubCertConfig)configService.GetConfigSection(AzureIotHubCertConfig.SectionName, typeof(AzureIotHubCertConfig)); ;
+            _certificate = new X509Certificate(cert.AzureRootCa);
         }
 
         public void Connect(string[] subscriptions)

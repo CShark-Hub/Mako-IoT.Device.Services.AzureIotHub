@@ -19,6 +19,7 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="AzureIotHubCommunicationService.cs" />
+    <Compile Include="Configuration\AzureIotHubCertConfig.cs" />
     <Compile Include="Configuration\AzureIotHubConfig.cs" />
     <Compile Include="Extensions\DeviceBuilderExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

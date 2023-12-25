@@ -6,8 +6,6 @@ namespace MakoIoT.Device.Services.AzureIotHub.Configuration
     {
         public static string SectionName => "AzureIotHub";
 
-        public string AzureRootCa { get; set; }
-
         /// <summary>
         /// Device id used to connect to AzureIoT.
         /// </summary>
