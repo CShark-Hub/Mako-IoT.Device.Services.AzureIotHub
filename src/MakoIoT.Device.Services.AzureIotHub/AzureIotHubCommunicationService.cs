@@ -1,7 +1,6 @@
 ﻿using MakoIoT.Device.Services.AzureIotHub.Configuration;
 using MakoIoT.Device.Services.Interface;
 using nanoFramework.Azure.Devices.Client;
-using nanoFramework.M2Mqtt.Messages;
 using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -12,42 +11,33 @@ namespace MakoIoT.Device.Services.AzureIotHub
     {
         private readonly INetworkProvider _networkProvider;
         private readonly ILog _logger;
-        private readonly AzureIotHubConfig _config;
-        private readonly X509Certificate _certificate;
+        private readonly IConfigurationService _configService;
 
         private DeviceClient _client;
         public bool CanSend => _client != null && _client.IsConnected && _networkProvider.IsConnected;
 
         public string ClientAddress => _networkProvider.ClientAddress;
 
-        public string ClientName => _config.DeviceFriendlyName ?? _config.DeviceId;
+        public string ClientName { get; set; }
 
         public event EventHandler MessageReceived;
 
-        public AzureIotHubCommunicationService(INetworkProvider networkProvider, IConfigurationService configService, ILog logger)
+        public AzureIotHubCommunicationService(IConfigurationService configService, ILog logger, INetworkProvider networkProvider)
         {
-            _networkProvider = networkProvider;
             _logger = logger;
-            _config = (AzureIotHubConfig)configService.GetConfigSection(AzureIotHubConfig.SectionName, typeof(AzureIotHubConfig));
-            var cert = (AzureIotHubCertConfig)configService.GetConfigSection(AzureIotHubCertConfig.SectionName, typeof(AzureIotHubCertConfig)); ;
-            _certificate = new X509Certificate(cert.AzureRootCa);
+            _configService = configService;
+            _networkProvider = networkProvider;
         }
 
         public void Connect(string[] subscriptions)
         {
-            if (!_networkProvider.IsConnected)
-            {
-                _networkProvider.Connect();
-                if (!_networkProvider.IsConnected)
-                {
-                    _logger.Error("Could not connect to network.");
-                    return;
-                }
-            }
-
             if (_client == null)
             {
-                _client = new DeviceClient(_config.Host, _config.DeviceId, _config.SasKey, azureCert: _certificate);
+                var cert = (AzureIotHubCertConfig)_configService.GetConfigSection(AzureIotHubCertConfig.SectionName, typeof(AzureIotHubCertConfig)); ;
+                var certificate = new X509Certificate(cert.AzureRootCa);
+                var config = (AzureIotHubConfig)_configService.GetConfigSection(AzureIotHubConfig.SectionName, typeof(AzureIotHubConfig));
+                ClientName = config.DeviceFriendlyName ?? config.DeviceId;
+                _client = new DeviceClient(config.Host, config.DeviceId, config.SasKey, azureCert: certificate);
                 _client.CloudToDeviceMessage += _client_CloudToDeviceMessage;
             }
 
@@ -68,7 +58,6 @@ namespace MakoIoT.Device.Services.AzureIotHub
                 if (!_client.IsConnected)
                 {
                     _logger.Error($"Could not connect to AzureIoT. Broker returned {mqttConnectResult}");
-                    return;
                 }
             }
             catch(Exception)
@@ -86,7 +75,7 @@ namespace MakoIoT.Device.Services.AzureIotHub
 
         private void _client_CloudToDeviceMessage(object sender, CloudToDeviceMessageEventArgs e)
         {
-            _logger.Trace($"Received message from topic AzureIoT hub");
+            _logger.Trace("Received message from topic AzureIoT hub");
             _logger.Trace(e.Message);
             MessageReceived?.Invoke(this, new ObjectEventArgs(e.Message));
         }
@@ -98,7 +87,7 @@ namespace MakoIoT.Device.Services.AzureIotHub
 
         public void Publish(string messageString, string messageType)
         {
-            var isReceived = _client.SendMessage(messageString, "application/json", new System.Collections.ArrayList() { new UserProperty("messageType", messageType) }, new CancellationTokenSource(TimeSpan.FromSeconds(60)).Token);
+            var isReceived = _client.SendMessage(messageString, null, new CancellationTokenSource(TimeSpan.FromSeconds(60)).Token);
             if (!isReceived)
             {
                 _logger.Error($"Unable to send message. {messageString}");
