@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace MakoIoT.Device.Services.AzureIotHub
 {
-    internal sealed class AzureIotHubCommunicationService : ICommunicationService
+    public sealed class AzureIotHubCommunicationService : ICommunicationService
     {
         private readonly INetworkProvider _networkProvider;
         private readonly ILog _logger;
@@ -57,10 +57,12 @@ namespace MakoIoT.Device.Services.AzureIotHub
                 var mqttConnectResult = _client.Open();
                 if (!_client.IsConnected)
                 {
-                    _logger.Error($"Could not connect to AzureIoT. Broker returned {mqttConnectResult}");
+                    var message = $"Could not connect to AzureIoT. Broker returned {mqttConnectResult}";
+                    _logger.Error(message);
+                    throw new Exception(message);
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
                 if (attempt <= 3)
                 {
@@ -69,6 +71,7 @@ namespace MakoIoT.Device.Services.AzureIotHub
                     OpenMqttClient(attempt);
                 }
 
+                _logger.Error(ex);
                 throw;
             }
         }
