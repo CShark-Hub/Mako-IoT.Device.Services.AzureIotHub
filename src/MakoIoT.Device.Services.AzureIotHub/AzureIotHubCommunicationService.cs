@@ -91,7 +91,7 @@ namespace MakoIoT.Device.Services.AzureIotHub
         public void Publish(string messageString, string messageType)
         {
             _logger.Information($"AzureIoT publishing message");
-            var isReceived = _client.SendMessage(messageString, null, new CancellationTokenSource(TimeSpan.FromSeconds(60)).Token);
+            var isReceived = _client.SendMessage(messageString, "application/json", new CancellationTokenSource(TimeSpan.FromSeconds(60)).Token);
             if (!isReceived)
             {
                 _logger.Error($"Unable to send message. {messageString}");
