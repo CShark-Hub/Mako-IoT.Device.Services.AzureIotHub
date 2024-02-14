@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MakoIoT.Device.Services.AzureIotHub.Configuration
+﻿namespace MakoIoT.Device.Services.AzureIotHub.Configuration
 {
     public sealed class AzureIotHubCertConfig
     {
