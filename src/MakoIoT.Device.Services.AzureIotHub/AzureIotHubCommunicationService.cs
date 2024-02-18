@@ -11,7 +11,8 @@ namespace MakoIoT.Device.Services.AzureIotHub
     {
         private readonly INetworkProvider _networkProvider;
         private readonly ILog _logger;
-        private readonly IConfigurationService _configService;
+        private readonly AzureIotHubConfig _config;
+        private readonly AzureIotHubCertConfig _cert;
 
         private DeviceClient _client;
         public bool CanSend => _client != null && _client.IsConnected && _networkProvider.IsConnected;
@@ -25,19 +26,18 @@ namespace MakoIoT.Device.Services.AzureIotHub
         public AzureIotHubCommunicationService(IConfigurationService configService, ILog logger, INetworkProvider networkProvider)
         {
             _logger = logger;
-            _configService = configService;
             _networkProvider = networkProvider;
+            _config = (AzureIotHubConfig)configService.GetConfigSection(AzureIotHubConfig.SectionName, typeof(AzureIotHubConfig));
+            _cert = (AzureIotHubCertConfig)configService.GetConfigSection(AzureIotHubCertConfig.SectionName, typeof(AzureIotHubCertConfig)); ;
+            ClientName = _config.DeviceFriendlyName ?? _config.DeviceId;
         }
 
         public void Connect(string[] subscriptions)
         {
             if (_client == null)
             {
-                var cert = (AzureIotHubCertConfig)_configService.GetConfigSection(AzureIotHubCertConfig.SectionName, typeof(AzureIotHubCertConfig)); ;
-                var certificate = new X509Certificate(cert.AzureRootCa);
-                var config = (AzureIotHubConfig)_configService.GetConfigSection(AzureIotHubConfig.SectionName, typeof(AzureIotHubConfig));
-                ClientName = config.DeviceFriendlyName ?? config.DeviceId;
-                _client = new DeviceClient(config.Host, config.DeviceId, config.SasKey, azureCert: certificate);
+                var certificate = new X509Certificate(_cert.AzureRootCa);
+                _client = new DeviceClient(_config.Host, _config.DeviceId, _config.SasKey, azureCert: certificate);
                 _client.CloudToDeviceMessage += _client_CloudToDeviceMessage;
             }
 
